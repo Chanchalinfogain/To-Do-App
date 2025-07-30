@@ -19,12 +19,7 @@ A modern, aesthetic, and unique To-Do List web application built with HTML, CSS,
 
 1. **Clone or Download** this repository to your computer.
 2. **Open the `Assigment Objective` folder** in VS Code or your preferred editor.
-3. **Start a Local Server** (required for localStorage to work):
-   - If you have Python installed, run:
-     - `python -m http.server` (Python 3)
-     - or `python -m SimpleHTTPServer` (Python 2)
-   - Or use any other local server tool.
-4. **Open your browser** and go to `http://localhost:8000/Assigment%20Objective/index.html` (or the correct path).
+3. **Open your browser** and go to `http://localhost:8000/Assigment%20Objective/index.html` (or the correct path).
 
 ## File Structure
 
@@ -41,15 +36,6 @@ A modern, aesthetic, and unique To-Do List web application built with HTML, CSS,
 
 - HTML5, CSS3, JavaScript (ES6)
 - GitHub Copilot (for code assistance)
-
-## Screenshots
-
-![Screenshot](screenshot.png)
-
-## Credits
-
-- [Unsplash](https://unsplash.com/) for any placeholder images
-- GitHub Copilot for code suggestions
 
 ---
 
