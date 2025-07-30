@@ -93,6 +93,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const noteInput = document.getElementById('note-input');
     const list = document.getElementById('task-list');
 
+    // --- Filtering UI ---
+    const filterContainer = document.createElement('div');
+    filterContainer.className = 'filter-container';
+    filterContainer.style.display = 'flex';
+    filterContainer.style.justifyContent = 'center';
+    filterContainer.style.gap = '1rem';
+    filterContainer.style.margin = '1rem 0';
+    const filters = ['All', 'Active', 'Completed'];
+    let currentFilter = 'All';
+    filters.forEach(f => {
+        const btn = document.createElement('button');
+        btn.textContent = f;
+        btn.className = 'filter-btn';
+        if (f === 'All') btn.classList.add('active');
+        btn.onclick = () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentFilter = f;
+            renderTasks();
+        };
+        filterContainer.appendChild(btn);
+    });
+    // Insert filter buttons after the form (below motivational quote and form)
+    form.parentNode.insertBefore(filterContainer, form.nextSibling);
+
     form.addEventListener('submit', function(e) {
         e.preventDefault();
         addTask({
@@ -114,7 +139,39 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     showQuote();
-    loadTasks();
+    renderTasks();
+
+    function renderTasks() {
+        list.innerHTML = '';
+        const tasks = JSON.parse(localStorage.getItem('todo-tasks') || '[]');
+        let filtered = tasks;
+        if (currentFilter === 'Active') {
+            filtered = tasks.filter(t => !t.completed);
+        } else if (currentFilter === 'Completed') {
+            filtered = tasks.filter(t => t.completed);
+        }
+        filtered.forEach(t => {
+            // Parse meta for date, time, day
+            let date = '', time = '', day = '';
+            if (t.meta) {
+                const m = t.meta.match(/Date: ([^|]*) \| Time: ([^|]*) \| Day: ([^|]*)/);
+                if (m) { date = m[1].trim(); time = m[2].trim(); day = m[3].trim(); }
+            }
+            addTask({
+                text: t.text,
+                date,
+                time,
+                day,
+                priority: t.priority,
+                status: t.status,
+                note: t.note,
+                completed: t.completed
+            }, true);
+        });
+    }
+
+    // Patch addTask to re-render on complete/delete
+    window._renderTasks = renderTasks;
 });
 
 function addTask(task, skipSave) {
@@ -173,6 +230,7 @@ function addTask(task, skipSave) {
         li.classList.toggle('completed');
         saveTasks();
         showQuote();
+        if (window._renderTasks) window._renderTasks();
     };
 
     const deleteBtn = document.createElement('button');
@@ -182,6 +240,7 @@ function addTask(task, skipSave) {
         animateRemove(li, () => {
             li.remove();
             saveTasks();
+            if (window._renderTasks) window._renderTasks();
         });
     };
 
@@ -192,4 +251,5 @@ function addTask(task, skipSave) {
     animateAdd(li);
     if (!skipSave) saveTasks();
     if (!skipSave) showQuote();
+    if (!skipSave && window._renderTasks) window._renderTasks();
 }
