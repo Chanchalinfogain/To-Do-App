@@ -1,0 +1,48 @@
+<!-- basic HTML5 template for a To-Do app -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="mascot"><span class="mascot-emoji" title="Your To-Do Buddy">🌸</span></div>
+        <h1>To-Do List</h1>
+        <!-- To-Do input form -->
+        <form id="todo-form">
+            <input type="text" id="task-input" placeholder="Add a new task..." required>
+            <input type="date" id="date-input" required>
+            <input type="time" id="time-input" required>
+            <select id="day-input" required>
+                <option value="">Day</option>
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+            </select>
+            <select id="priority-input" required>
+                <option value="">Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <select id="status-input" required>
+                <option value="">Status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+            </select>
+            <input type="text" id="note-input" placeholder="Note (optional)">
+            <button type="submit">Add</button>
+        </form>
+        <ul id="task-list"></ul>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
